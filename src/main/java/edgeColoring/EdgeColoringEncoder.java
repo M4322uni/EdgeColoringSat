@@ -6,13 +6,9 @@ import it.uniroma1.di.tmancini.utils.CmdLineOptions;
 import utils.GraphInfo;
 import utils.Pair;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class EdgeColoringEncoder {
 
