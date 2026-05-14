@@ -37,9 +37,6 @@ public class GraphInfo {
                 edges.add(new Pair<>(split[0], split[1]));
             }
         }
-        catch (java.io.IOException e) {
-            throw e;
-        }
         this.edges = new boolean[map.size()][map.size()];
         for (Pair<String> edge : edges) {
             this.edges[map.get(edge.getLeft())][map.get(edge.getRight())] = true;
