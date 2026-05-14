@@ -1,7 +1,6 @@
 package edgeColoring;
 
 import it.uniroma1.di.tmancini.teaching.ai.SATCodec.SATModelDecoder;
-import it.uniroma1.di.tmancini.utils.CmdLineOptions;
 import utils.GraphInfo;
 import utils.Pair;
 
@@ -16,23 +15,25 @@ public class EdgeColoringDecoder {
         int rIdx = 0;
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--file")) {
-                left = new String[]{args[i], args[++i]};
+                left = new String[]{args[++i]};
             }
             else
-                right[rIdx++] = args[i];
+                try {
+                    right[rIdx++] = args[i];
+                }
+                catch (IndexOutOfBoundsException e) {
+                    throw new IllegalArgumentException("Missing --file argument (the file containing " +
+                            "the graph)");
+                }
         }
         return new Pair<>(left, right);
     }
 
     public static void main(String[] args) throws IOException {
-        CmdLineOptions cmd = new CmdLineOptions("Edge Coloring Decoder", "14/05/26",
-                "Matteo Piscitello", "A simple SAT decoder for the Edge Coloring problem");
-        cmd.addOption("file", "The name of the file containing the graph", true);
         Pair<String[]> partition = argsPartition(args);
-        cmd.parse(partition.getLeft());
         SATModelDecoder dec = new SATModelDecoder(partition.getRight());
         dec.run();
-        Path path = Paths.get(cmd.getOptionValue("file"));
+        Path path = Paths.get(partition.getLeft()[0]);
         GraphInfo save = new GraphInfo();
         save.getGraph(path);
         int maxVar = dec.getMaxVar();
